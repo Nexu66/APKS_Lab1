@@ -206,9 +206,11 @@ function checkBuild() {
   const script = IS_WINDOWS ? "ci.bat" : "ci.sh";
   if (!record("build", `${script} exists`, exists(script), `${script} not found — run /create-build`)) return;
   console.log(`---- running ${script} (output below) ----`);
+  // Explicit relative path: with NoDefaultCurrentDirectoryInExePath=1 (set e.g. by Claude Code)
+  // cmd.exe does not look up a bare "ci.bat" in the current directory.
   const r = IS_WINDOWS
-    ? spawnSync("cmd.exe", ["/d", "/c", script], { cwd: ROOT, stdio: "inherit" })
-    : spawnSync("bash", [script], { cwd: ROOT, stdio: "inherit" });
+    ? spawnSync("cmd.exe", ["/d", "/c", `.\\${script}`], { cwd: ROOT, stdio: "inherit" })
+    : spawnSync("bash", [`./${script}`], { cwd: ROOT, stdio: "inherit" });
   console.log(`---- ${script} finished with exit code ${r.status} ----`);
   record("build", `${script} succeeded`, r.status === 0, `exit code ${r.status}`);
 

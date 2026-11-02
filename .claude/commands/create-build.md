@@ -23,7 +23,7 @@ argument-hint: "[build-config|unit-tests|ci-scripts]"
       `tsconfig.json`, `scripts/build-exe.mjs`;
    2. `unit-tests` — `src/calc.ts`, `vitest.config.ts`, `tests/hello.test.ts`;
    3. `ci-scripts` — `ci.sh`, `ci.bat`, `run.sh`, `run.bat`; кінці рядків (LF / CRLF) і біт виконання.
-3. Запусти повний конвеєр: Windows — `ci.bat`, Linux / macOS — `./ci.sh`.
+3. Запусти повний конвеєр: Windows — `.\ci.bat` (з явним шляхом), Linux / macOS — `./ci.sh`.
 4. Виведи список `CREATE` / `SKIP` / `UPDATE` і хвіст логу конвеєра.
 
 ## Очікувані файли
@@ -36,7 +36,7 @@ argument-hint: "[build-config|unit-tests|ci-scripts]"
 
 | Команда | Очікуваний результат |
 |---|---|
-| `ci.bat` (Windows) / `./ci.sh` (Linux, macOS) | `CI: SUCCESS`, код 0 |
+| `.\ci.bat` (Windows) / `./ci.sh` (Linux, macOS) | `CI: SUCCESS`, код 0 |
 | `npm test -- -t BasicAddition` | `BasicAddition` пройшов |
 | `build/bin/hello[.exe]` | `Hello, World!` |
 

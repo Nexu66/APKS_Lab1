@@ -53,7 +53,7 @@ Skill поділено на три підкроки; їх можна викон�
 |---|---|---|
 | `build-config` | npm scripts, `devDependencies`, `package-lock.json`, `tsconfig.json`, `scripts/build-exe.mjs` | `npm run typecheck`, `npm run build` |
 | `unit-tests` | `src/calc.ts`, `vitest.config.ts`, `tests/hello.test.ts` | `npm test` |
-| `ci-scripts` | `ci.sh`, `ci.bat`, `run.sh`, `run.bat` | `ci.bat` (Windows) / `./ci.sh` (Linux, macOS) |
+| `ci-scripts` | `ci.sh`, `ci.bat`, `run.sh`, `run.bat` | `.\ci.bat` (Windows) / `./ci.sh` (Linux, macOS) |
 
 ## Порядок дій
 
@@ -372,7 +372,7 @@ exit /b
 | перевірка типів | `npm run typecheck` | без помилок, код 0 |
 | юніт-тести | `npm test` | `Tests 6 passed (6)` |
 | тест `BasicAddition` | `npm test -- -t BasicAddition` | `1 passed`, решта `skipped` |
-| повний конвеєр | Windows: `ci.bat`; Linux / macOS: `./ci.sh` | останній рядок `CI: SUCCESS`, код 0 |
+| повний конвеєр | Windows: `.\ci.bat`; Linux / macOS: `./ci.sh` | останній рядок `CI: SUCCESS`, код 0 |
 | виконуваний файл | `build/bin/hello` (Windows: `build\bin\hello.exe`) | `Hello, World!`, код 0 |
 | звіт тестів | `build/test-results/junit.xml` | є `testcase name="BasicAddition"` без `<failure>` |
 | кінці рядків | `file ci.sh ci.bat run.sh run.bat` | `*.sh` без CRLF, `*.bat` — `with CRLF line terminators` |
@@ -390,7 +390,7 @@ UPDATE package.json (scripts: typecheck, test, test:ci, bundle, package, build; 
 CREATE package-lock.json
 CREATE tsconfig.json, vitest.config.ts, src/calc.ts, tests/hello.test.ts, scripts/build-exe.mjs
 CREATE ci.sh, ci.bat, run.sh, run.bat
-> ci.bat
+> .\ci.bat
 ==> [1/6] Checking Node.js (>= 26) and npm
 ...
  Tests  6 passed (6)
@@ -407,6 +407,7 @@ CI: SUCCESS
 |---|---|---|
 | `ci.bat`: «The system cannot find the batch label specified - fail» або випадкові «is not recognized» | `ci.bat` збережено з LF | `unix2dos ci.bat run.bat`; `.gitattributes`: `*.bat text eol=crlf` |
 | `/usr/bin/env: 'bash\r': No such file or directory` | `ci.sh` збережено з CRLF | `dos2unix ci.sh run.sh`; `.gitattributes`: `*.sh text eol=lf` |
+| `'ci.bat' is not recognized as an internal or external command` | PowerShell або змінна `NoDefaultCurrentDirectoryInExePath=1` (її встановлює Claude Code): `cmd` не шукає команди в поточному каталозі | запускати з явним шляхом `.\ci.bat`; так само робить `check.mjs` |
 | `ci.bat` зупиняється після першого `npm` без помилки | `npm` у `.bat` викликано без `call` | завжди `call npm ...` |
 | `TS5097: An import path can only end with a '.ts' extension...` | у `tsconfig.json` немає `allowImportingTsExtensions` | використати шаблон `tsconfig.json` |
 | `TS2580: Cannot find name 'process'` | немає `@types/node` або `"types": ["node"]` | встановити `@types/node`, шаблон `tsconfig.json` |
