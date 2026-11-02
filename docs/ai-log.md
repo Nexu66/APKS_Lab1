@@ -60,6 +60,14 @@ RESULT: FAIL (3 of 8 failed)
 
 Після повернення `return a + b;` повний `/check` знову повертає `RESULT: PASS (47 checks)`.
 
+### Публікація: push, GitHub Actions, pull request
+
+| № | Запит / дія | Результат | Рішення |
+|---|---|---|---|
+| 1 | «Так, пуш, і встанови gh для PR» | `git push` гілок `master`, `develop`, `feature/lab1-ts-hello`; `winget install GitHub.cli` (2.103.3), вхід `gh auth login` виконав студент | push і PR — лише за явною згодою користувача (manifest) |
+| 2 | CI на push у `feature/lab1-ts-hello` | [run 41509729696](https://github.com/Nexu66/APKS_Lab1/actions/runs/41509729696): ubuntu 24 с, windows 33 с, macos 35 с — success; 6 артефактів (`hello-<os>` 38–46 МБ, `test-results-<os>`) | — |
+| 3 | `gh pr create --title lab1/finish --base develop` | [PR #1](https://github.com/Nexu66/APKS_Lab1/pull/1); [run 41510608250](https://github.com/Nexu66/APKS_Lab1/actions/runs/41510608250): ubuntu і windows — success, macOS-job 15 хв у черзі й скасований GitHub (помилка 4) | `gh run rerun --failed` → macOS success (24 с); усі перевірки PR зелені |
+
 ## 3. Помилки та їх виправлення
 
 1. **`ci.bat` не знаходився під час `/check` (помилка інструкцій агента).** Claude Code запускає
@@ -76,3 +84,10 @@ RESULT: FAIL (3 of 8 failed)
    esbuild працює без postinstall, бо бере готовий бінарний файл з optional-пакета
    `@esbuild/<platform>`. Рішення: не дозволяти install-скрипти без потреби; попередження
    задокументовано у skill `build-and-test`.
+4. **macOS-job pull request скасовано GitHub (помилка середовища CI).** Job 15 хвилин мав статус
+   `Waiting for a runner to pick up this job...`, після чого GitHub завершив його з анотацією
+   `The job was not acquired by Runner of type hosted even after multiple attempts` і повідомленням
+   `Due to capacity constraints, jobs targeting macOS arm64 runners may experience longer queue times`.
+   Аналіз: код PR ідентичний гілці `feature` (`git diff` merge-коміту PR і гілки порожній), а той самий
+   код уже пройшов macOS-збірку на push. Рішення: перезапустити лише скасований job
+   (`gh run rerun --failed`) — успіх за 24 с; workflow не змінювався (`macos-latest` вимагає методичка).
