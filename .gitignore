@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output and test reports
+build/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Logs and caches
+npm-debug.log*
+.npm/
+
+# Secrets and local environment
+.env
+.env.*
+*.pem
+*.key
+
+# Local Claude Code settings (personal permissions)
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
