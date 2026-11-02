@@ -9,6 +9,8 @@
 | Claude Code | актуальна | `claude --version` (лише для запуску агента) |
 
 Linux / macOS — bash; Windows — `cmd` або PowerShell (`ci.sh` також працює в Git Bash).
+На Windows запускайте скрипти з явним шляхом (`.\ci.bat`, `.\run.bat`): PowerShell і середовища зі
+змінною `NoDefaultCurrentDirectoryInExePath=1` (зокрема Claude Code) не шукають команди в поточному каталозі.
 
 ## 2. Запуск AI-агента
 
@@ -52,7 +54,7 @@ node .claude/scripts/check.mjs --only workflow    # лише .github/workflows/c
 ```
 
 ```bat
-ci.bat       :: Windows
+.\ci.bat     :: Windows (cmd / PowerShell)
 ```
 
 Кроки скрипта: перевірка Node.js ≥ 26 → `npm ci` → `npm run typecheck` → `npm run test:ci` →
@@ -80,8 +82,8 @@ ci.bat       :: Windows
 ```
 
 ```bat
-run.bat
-build\bin\hello.exe
+.\run.bat
+.\build\bin\hello.exe
 ```
 
 Очікуваний вивід: `Hello, World!`, код виходу 0.
@@ -106,5 +108,5 @@ Workflow `.github/workflows/ci.yml` запускається на `push` (`devel
 
 1. Тимчасово змініть у `src/calc.ts` `return a + b;` на `return a + b + 1;`.
 2. `npm test` → `FAIL tests/hello.test.ts > BasicAddition` (`expected 6 to be 5`).
-3. `ci.bat` / `./ci.sh` → `CI: FAILED`, код виходу 1; `/check` → `[FAIL] build: ...`, `RESULT: FAIL`.
+3. `.\ci.bat` / `./ci.sh` → `CI: FAILED`, код виходу 1; `/check` → `[FAIL] build: ...`, `RESULT: FAIL`.
 4. Поверніть `return a + b;` і переконайтеся, що `/check` знову повертає `RESULT: PASS`.

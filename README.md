@@ -82,8 +82,8 @@ node .claude/scripts/check.mjs --only agent    # лише файли агент�
 
 | Дія | Linux / macOS | Windows |
 |---|---|---|
-| Повна збірка і тести | `./ci.sh` | `ci.bat` |
-| Запуск застосунку | `./run.sh` | `run.bat` |
+| Повна збірка і тести | `./ci.sh` | `.\ci.bat` |
+| Запуск застосунку | `./run.sh` | `.\run.bat` |
 | Запуск із вихідного коду | `npm start` | `npm start` |
 | Лише юніт-тести | `npm test` | `npm test` |
 
