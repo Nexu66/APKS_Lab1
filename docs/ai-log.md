@@ -28,3 +28,4 @@ AI-інструмент: **Claude Code** (CLI) з моделлю **Claude Opus 5
 | Крок | Command | Результат | Перевірка |
 |---|---|---|---|
 | 1 | `/git-init` | `CREATE .gitignore`, `CREATE .gitattributes` | `git check-ignore` → `build/`, `node_modules/`; дублікатів немає; артефакти не відстежуються |
+| 2 | `/create-project` | `CREATE package.json`, `src/greet.ts`, `src/main.ts`, `src/index.ts`, `docs/usage.md`; `UPDATE README.md` (+ розділ «Проєкт Hello World») | `npm start` → `Hello, World!`; маркер розділу в README — 1; повторний запуск кроків 1–2 — усі файли `SKIP` |

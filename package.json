@@ -1,0 +1,13 @@
+{
+  "name": "hello",
+  "version": "1.0.0",
+  "description": "Cross-platform Hello World (lab 1, variant 6: TypeScript + npm scripts + Vitest)",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=26"
+  },
+  "scripts": {
+    "start": "node src/index.ts"
+  }
+}

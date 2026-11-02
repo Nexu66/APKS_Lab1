@@ -73,3 +73,18 @@ node .claude/scripts/check.mjs --only agent    # лише файли агент�
 
 Точні команди запуску агента, локальної збірки і застосунку — у `docs/usage.md`
 (створюється агентом під час `/init`).
+
+<!-- project:hello -->
+## Проєкт Hello World
+
+Мінімальний кросплатформний застосунок на TypeScript, згенерований агентом `build-engineer`
+(`/create-project`, `/create-build`, `/create-actions`). Виводить `Hello, World!`.
+
+| Дія | Linux / macOS | Windows |
+|---|---|---|
+| Повна збірка і тести | `./ci.sh` | `ci.bat` |
+| Запуск застосунку | `./run.sh` | `run.bat` |
+| Запуск із вихідного коду | `npm start` | `npm start` |
+| Лише юніт-тести | `npm test` | `npm test` |
+
+Виконуваний файл: `build/bin/hello` (Windows: `build\bin\hello.exe`). Детальніше — [`docs/usage.md`](docs/usage.md).
